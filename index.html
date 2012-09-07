@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NBT OpenLayers Control for Enyo 2</title>
+		<link rel="shortcut icon" href="assets/favicon.ico"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <style type="text/css">
+            #nbtlogo {
+                display: block;
+                position: absolute;
+                z-index: 1001;
+                right: 0;
+                bottom: 0;
+                border: none;
+                width: 95px;
+                height: 36px;
+                background-image: url(lib/img/poweredbynbt.png);
+            }
+        </style>
+
+		<script src="enyo/enyo.js"></script>
+		<script src="source/package.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+        <div id='nbtlogo'></div>
+        <div id='enyoPanel'></div>
+		<script>
+            var map = new nbt.OpenLayers().renderInto('enyoPanel').getMap();
+            /**
+            Or you can define a particular div id to be used:
+            var map = new nbt.OpenLayers({ div: 'myDiv' }).renderInto(document.body).getMap();
+
+            The nbt.OpenLayers constructor accepts a regular OpenLayers 'options' object.
+            */
+            var osm = new OpenLayers.Layer.OSM();
+            osm.attribution = "";
+            
+            map.addLayer(osm);
+            map.addControl(new OpenLayers.Control.LayerSwitcher());
+            map.setCenter(
+                new OpenLayers.LonLat(-97, 38).transform(
+                    new OpenLayers.Projection("EPSG:4326"),
+                    map.getProjectionObject()
+                ), 
+                5
+            );
+		</script>
+	</body>
+</html>
